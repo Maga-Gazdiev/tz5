@@ -1,0 +1,23 @@
+services:
+  postgres:
+    image: postgres:latest
+    ports:
+      - "5432:5432"  # Перенаправляем порт PostgreSQL
+    environment:
+      POSTGRES_DB: apiblog
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+
+  server:
+    build:
+      context: .
+    ports:
+      - "9000:80"
+    depends_on:
+      - postgres
+    environment:
+      - DB_HOST=postgres
+      - DB_CONNECTION=pgsql
+      - DB_DATABASE=apiblog
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=postgres
